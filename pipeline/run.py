@@ -23,9 +23,9 @@ from pipeline.transform import (
 )
 
 
-def run_pipeline(raw_dir=None, staging_dir=None) -> dict:
-    raw_dir = raw_dir or RAW_DIR
-    staging_dir = staging_dir or STAGING_DIR
+def run_(raw_dir=None, staging_dir=None) -> dict:
+    raw_dir =  RAW_DIR
+    staging_dir =  STAGING_DIR
 
     customers_raw = extract_customers(raw_dir)
     products_raw = extract_products(raw_dir)
@@ -39,20 +39,21 @@ def run_pipeline(raw_dir=None, staging_dir=None) -> dict:
 
     customers = transform_customers(customers_raw)
     products = transform_products(products_raw)
-    fx = transform_fx_rates(fx_raw)
-    orders = transform_orders(orders_raw, fx)
+    # fx = transform_fx_rates(fx_raw)
+    # orders = transform_orders(orders_raw, fx)
 
-    write_staging("orders_transformed", orders, staging_dir)
+    # write_staging("orders_transformed", orders, staging_dir)
 
-    conn = connect()
-    try:
-        counts = load_warehouse(conn, customers, products, orders)
-    finally:
-        conn.close()
+    # conn = connect()
+    # try:
+    #     counts = load_warehouse(conn, customers, products, orders)
+    # finally:
+    #     conn.close()
 
-    print("Loaded", counts)
-    print(f"Order rows sent to warehouse: {len(orders)}")
-    return {"counts": counts, "order_rows": len(orders)}
+    # print("Loaded", counts)
+    # print(f"Order rows sent to warehouse: {len(orders)}")
+    # return {"counts": counts, "order_rows": len(orders)}
+    return 0
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -64,8 +65,8 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
     try:
-        run_pipeline(raw_dir=args.raw_dir)
+        run_(raw_dir=args.raw_dir)
     except Exception as exc:  # noqa: BLE001 — surface whatever the batch hits
-        print(f"Pipeline failed: {exc}", file=sys.stderr)
+        print(f" failed: {exc}", file=sys.stderr)
         return 1
     return 0

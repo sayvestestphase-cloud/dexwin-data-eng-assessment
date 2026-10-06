@@ -12,7 +12,7 @@ def _read_csv(path: Path) -> pd.DataFrame:
 
 
 def extract_customers(raw_dir: Path | None = None) -> pd.DataFrame:
-    path = (raw_dir or RAW_DIR) / "customers.csv"
+    path = (RAW_DIR) / "customers.csv"
     return _read_csv(path)
 
 

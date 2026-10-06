@@ -2,9 +2,11 @@ import pandas as pd
 
 
 def transform_customers(df: pd.DataFrame) -> pd.DataFrame:
-    out = df.copy()
-    out["signup_at"] = pd.to_datetime(out["signup_at"], utc=True, errors="coerce")
-    return out[["customer_id", "email", "full_name", "country", "signup_at"]]
+    single_date = pd.to_datetime('2026-10-06')
+    # out = df.copy()
+    # out["signup_at"] = pd.to_datetime(out["signup_at"], utc=True, errors="coerce")
+    return df[["customer_id", "email", "full_name", "country", "signup_at"]].copy()
+    # return 0
 
 
 def transform_products(df: pd.DataFrame) -> pd.DataFrame:
